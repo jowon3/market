@@ -1,69 +1,44 @@
-import Image from "next/image";
-
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+"use client";
+import { useEffect, useState } from "react";
+const base="https://www.busanpedia.com/wp-content/uploads/2024/05/";
+const places=[
+{id:1,name:"이가네떡볶이",category:"분식",menu:"떡볶이 · 튀김",desc:"무에서 우러난 달큰함, 부산을 대표하는 빨간 맛",image:base+"bupyeong-kkangtong-market-tteokbokki-683x1024.jpg",tag:"깡통시장 대표 맛집"},
+{id:2,name:"깡통골목할매 유부전골",category:"한식",menu:"유부전골 · 물떡",desc:"속을 꽉 채운 유부주머니와 뜨끈한 국물 한 모금",image:base+"bupyeong-kkangtong-market-korean-food-busan-4-683x1024.jpg",tag:"뜨끈한 시장의 맛"},
+{id:3,name:"깡돼후",category:"치킨·튀김",menu:"돼지갈비후라이드",desc:"바삭한 튀김 속 달짝지근한 돼지갈비의 반전",image:"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=85",tag:"바삭한 한 입"},
+{id:4,name:"거인통닭",category:"치킨·튀김",menu:"옛날 후라이드 통닭",desc:"종이봉투 가득 담긴 시장 통닭의 푸짐함",image:"https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=800&q=85",tag:"함께 먹기 좋은"},
+{id:5,name:"양산집",category:"한식",menu:"돼지국밥 · 수육",desc:"골목에서 만나는 든든하고 깊은 부산의 한 끼",image:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=85",tag:"든든한 한 끼"},
+{id:6,name:"서온떡방",category:"간식·디저트",menu:"구운 찹쌀떡",desc:"겉은 노릇하고 속은 쫀득한, 골목의 달콤한 쉼표",image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=85",tag:"달콤한 마무리"}];
+const giftShops=[
+{id:101,name:"미도어묵 부평점",type:"부산 어묵",emoji:"🍢",label:"부산의 맛을 선물하고 싶다면",item:"모듬어묵 · 어묵 선물세트",address:"부산 중구 중구로43번길 31",description:"시장 어묵거리에서 만나는 부산 어묵. 가족과 나눌 선물로 여러 종류를 골라보세요.",tip:"선물세트 구성과 보냉 포장·택배 가능 여부를 매장에 문의하세요.",source:"https://midofoods.com/md1/bbs/page.php?hid=intro2",sourceLabel:"미도어묵 공식 매장 안내"},
+{id:102,name:"범표어묵 부평점",type:"부산 어묵",emoji:"🎁",label:"취향대로 고르는 먹거리 선물",item:"수제찐어묵",address:"부산 중구 부평2길 53",description:"다양한 수제찐어묵 중 받는 사람의 취향에 맞춰 골라 담기 좋은 상점이에요.",tip:"이동시간을 알려주고 보관 방법과 포장 가능 여부를 확인하세요.",source:"https://www.daangn.com/kr/local-profile/범표어묵-부평점-mc13f9g6w2ib/",sourceLabel:"상점 등록 안내"},
+{id:6,name:"서온떡방",type:"달콤한 간식",emoji:"🍡",label:"여행의 달콤한 기억을 나눠요",item:"구운 찹쌀떡",address:"부평깡통시장 내 · 정확한 위치는 지도 확인",description:"쫀득한 찹쌀떡을 좋아하는 분에게 추천해요. 가까운 곳에 가져갈 간식 선물로 살펴보세요.",tip:"당일 판매 품목과 포장, 섭취·보관 방법을 구매 전 확인하세요.",source:"https://www.busanpedia.com/bupyeong-kkangtong-market/",sourceLabel:"Busanpedia 시장 상점 안내"}
+];
+type Place=typeof places[number];
+function Icon({name,size=20}:{name:string;size?:number}){return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{name==="heart"?<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>:name==="search"?<><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></>:name==="arrow"?<path d="M4 12h16m-6-6 6 6-6 6"/>:name==="pin"?<><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></>:<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5ZM9 3v16M15 5v16"/>}</svg>}
+const map=(name:string)=>`https://map.naver.com/p/search/${encodeURIComponent("부산 부평깡통시장 "+name)}`;
+export default function Home(){
+ const [giftFilter,setGiftFilter]=useState("전체");
+ const [category,setCategory]=useState("전체"),[query,setQuery]=useState(""),[saved,setSaved]=useState<number[]>([]),[onlySaved,setOnlySaved]=useState(false),[selected,setSelected]=useState<Place|null>(null),[sort,setSort]=useState("추천순");
+ useEffect(()=>{try{setSaved(JSON.parse(localStorage.getItem("kkangtong-saved")||"[]"))}catch{}},[]);
+ useEffect(()=>{if(!selected)return;const listener=(e:KeyboardEvent)=>{if(e.key==="Escape")setSelected(null)};window.addEventListener("keydown",listener);return()=>window.removeEventListener("keydown",listener)},[selected]);
+ function save(id:number){const next=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];setSaved(next);localStorage.setItem("kkangtong-saved",JSON.stringify(next))}
+ function browse(){document.getElementById("discover")?.scrollIntoView({behavior:"smooth"})}
+ const visibleGifts=giftShops.filter(g=>(giftFilter==="전체"||g.type===giftFilter)&&(!onlySaved||saved.includes(g.id)));
+ const filtered=places.filter(p=>(category==="전체"||category===p.category)&&(!onlySaved||saved.includes(p.id))&&`${p.name} ${p.menu} ${p.desc}`.includes(query.trim())).sort((a,b)=>sort==="가나다순"?a.name.localeCompare(b.name,"ko"):a.id-b.id);
+ return <><header><div className="header-inner"><a className="brand" href="#"><span className="brand-mark">깡</span><span>깡통<span className="light">한입</span><small>KKANGTONG BITES</small></span></a><nav><button className={!onlySaved?"active":""} onClick={()=>{setOnlySaved(false);browse()}}>맛집 둘러보기</button><a href={map("")} target="_blank" rel="noreferrer">시장 지도</a><a href="#gifts">선물 고르기</a><a href="#night">야시장 가이드 <i/></a></nav><button className="saved-button" onClick={()=>{setOnlySaved(!onlySaved);browse()}}><Icon name="heart" size={17}/><span>저장한 곳</span><b>{saved.length}</b></button></div></header>
+ <main><section className="hero"><div className="hero-bg"/><div className="hero-inner"><div className="location"><Icon name="pin" size={13}/> 부산, 부평깡통시장</div><h1>골목마다 맛있는 발견,<br/>오늘은 <em>깡통 한입.</em></h1><p>부산의 정이 가득한 시장 골목에서<br/>나만의 맛있는 한 끼를 찾아보세요.</p><form className="search" onSubmit={e=>{e.preventDefault();setOnlySaved(false);browse()}}><Icon name="search"/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="어떤 맛을 찾고 있나요? 떡볶이, 유부전골…" aria-label="메뉴 또는 가게 검색"/><button>맛집 찾기 <Icon name="arrow" size={16}/></button></form><div className="popular"><span>많이 찾는 맛</span>{["떡볶이","유부전골","돼지갈비","통닭"].map(t=><button key={t} onClick={()=>{setQuery(t);setCategory("전체");setOnlySaved(false);browse()}}>#{t}</button>)}</div></div><div className="hero-caption">LOCAL FOOD, LOCAL STORIES<small>골목의 맛을 따라, 부산을 만나다.</small></div></section>
+ <div className="content"><section className="welcome"><span className="welcome-icon">🍊</span><div><strong>반가워요, 맛있는 부산에 오셨네요!</strong><p>오래된 단골집부터 새로운 한 입까지, 깡통시장의 맛을 모았어요.</p></div><a href="https://www.bupyeong-market.com/" target="_blank" rel="noreferrer">시장 알아보기 <Icon name="arrow" size={16}/></a></section>
+ <section className="market-hours" aria-labelledby="hours-title"><div className="hours-heading"><div><span className="eyebrow">PLAN YOUR VISIT</span><h2 id="hours-title">방문 전, 시장 운영 안내</h2></div><small>확인일 2026.10.16</small></div><dl className="hours-grid"><div><dt>☀ 일반시장 영업시간</dt><dd>08:00–20:00</dd><p>시장 이용 안내 기준 · 점포별 상이</p></div><div><dt>☾ 야시장 영업시간</dt><dd>19:30–23:30</dd><p>중구청 운영 공지 기준 · 임시 변경 가능</p></div><div><dt>▦ 시장 전체 휴무일</dt><dd className="holiday-text">점포별로 달라요</dd><p>공통 정기휴무일은 별도 안내되어 있지 않아요.</p></div></dl><div className="hours-notice"><p>명절에는 야시장이 임시 휴무하거나 운영시간이 바뀔 수 있어요. 일반시장과 야시장 휴무는 다를 수 있으니 방문 전 확인해 주세요.</p><a href="tel:0512431128">상인회 문의 051-243-1128 ↗</a></div><div className="hours-sources"><span>운영정보 출처</span><a href="https://access.visitkorea.or.kr/ms/detail.do?cotId=a855c95c-ef06-418a-9148-64268ea4d24f" target="_blank" rel="noreferrer">한국관광공사 · 일반시장 시간 및 휴무 ↗</a><a href="https://www.bsjunggu.go.kr/dong/board/view.junggu?boardId=BBS_0000112&amp;dataSid=260106&amp;menuCd=DOM_000001111004001000" target="_blank" rel="noreferrer">부산 중구청 · 야시장 운영 공지 ↗</a></div></section>
+ <section className="discover" id="discover"><div className="section-heading"><div><div className="eyebrow">TASTE THE MARKET</div><h2>{onlySaved?"내가 저장한 맛집":"오늘, 어떤 맛이 끌리세요?"}</h2><p>{onlySaved?"다음에 또 생각날 그 맛, 여기에 모아뒀어요.":"먹고 싶은 메뉴를 골라 나만의 시장 맛집을 발견해 보세요."}</p></div><span className="hand-note">취향대로 골라 먹는 재미 ↙</span></div>
+ <div className="categories">{[{name:"전체",emoji:"🍽️",sub:"모든 맛집"},{name:"분식",emoji:"🍢",sub:"떡볶이·어묵"},{name:"한식",emoji:"🍚",sub:"든든한 한 끼"},{name:"치킨·튀김",emoji:"🍗",sub:"바삭한 즐거움"},{name:"간식·디저트",emoji:"🥞",sub:"달콤한 한 입"},{name:"기념품·선물",emoji:"🎁",sub:"여행의 한 조각"}].map(c=><button key={c.name} className={`category ${category===c.name?"selected":""}`} aria-pressed={category===c.name} onClick={()=>setCategory(c.name)}><span className="emoji">{c.emoji}</span><span><strong>{c.name}</strong><small>{c.sub}</small></span>{category===c.name&&<b>✓</b>}</button>)}</div>
+ {category!=="기념품·선물"&&<><div className="results"><span>골목에서 찾은 맛집 <b>{filtered.length}</b><small>⌖ 부평깡통시장 안</small></span><div><select value={sort} onChange={e=>setSort(e.target.value)} aria-label="맛집 정렬"><option>추천순</option><option>가나다순</option></select><a className="map-button" href={map("")} target="_blank" rel="noreferrer"><Icon name="map" size={16}/> 지도 보기</a></div></div>
+ <div className="cards">{filtered.map(p=><article className="card" key={p.id}><div className="card-photo"><button className="photo" style={{backgroundImage:`url("${p.image}")`}} onClick={()=>setSelected(p)} aria-label={`${p.name} 자세히 보기`}/><span className="photo-tag">{p.tag}</span><button className={`heart ${saved.includes(p.id)?"is-saved":""}`} onClick={()=>save(p.id)} aria-label={`${p.name} 저장 ${saved.includes(p.id)?"취소":"하기"}`} aria-pressed={saved.includes(p.id)}><Icon name="heart" size={19}/></button><small className="photo-credit">{p.id<3?"사진 · Busanpedia":"메뉴 참고 이미지"}</small></div><div className="card-body"><div className="card-meta"><span>{p.category}</span><span>⌖ 부평깡통시장</span></div><button className="card-title" onClick={()=>setSelected(p)}>{p.name}<span>↗</span></button><p>{p.desc}</p><div className="card-bottom"><span>{p.menu}</span><button onClick={()=>setSelected(p)}>자세히 보기 <Icon name="arrow" size={14}/></button></div></div></article>)}</div>
+ {filtered.length===0&&<div className="empty"><span>🍽️</span><h3>{onlySaved?"아직 저장한 맛집이 없어요":"찾으시는 맛집이 없어요"}</h3><p>다른 메뉴를 검색하거나, 마음에 드는 가게의 하트를 눌러보세요.</p><button onClick={()=>{setQuery("");setCategory("전체");setOnlySaved(false)}}>모든 맛집 보기 →</button></div>}</>}</section>
+ <section className="gifts" id="gifts" aria-labelledby="gifts-title"><div className="section-heading"><div><span className="eyebrow">A LITTLE PIECE OF BUSAN</span><h2 id="gifts-title">부산의 맛, 선물로 가져가세요</h2><p>시장 안에서 고르는 먹거리 선물. 소중한 사람에게 여행의 한 조각을 전해보세요.</p></div><span className="gift-heading-icon" aria-hidden="true">🎁</span></div><div className="categories gift-categories" role="group" aria-label="기념품·선물 종류">{[{name:"전체",emoji:"🎁",sub:"모든 선물 상점"},{name:"부산 어묵",emoji:"🍢",sub:"부산의 맛을 담아"},{name:"달콤한 간식",emoji:"🍡",sub:"나누는 달콤함"}].map(c=><button key={c.name} aria-pressed={giftFilter===c.name} className={`category ${giftFilter===c.name?"selected":""}`} onClick={()=>setGiftFilter(c.name)}><span className="emoji" aria-hidden="true">{c.emoji}</span><span><strong>{c.name}</strong><small>{c.sub}</small></span>{giftFilter===c.name&&<b>✓</b>}</button>)}</div><div className="gift-grid">{visibleGifts.map(g=><article className="gift-card" key={g.id}><div className="gift-card-top"><span className="gift-emoji" aria-hidden="true">{g.emoji}</span><span className="gift-kind">{g.type}</span><button className={`gift-save ${saved.includes(g.id)?"is-saved":""}`} onClick={()=>save(g.id)} aria-label={`${g.name} 선물 상점 저장 ${saved.includes(g.id)?"취소":"하기"}`} aria-pressed={saved.includes(g.id)}><Icon name="heart" size={19}/></button></div><span className="gift-label">{g.label}</span><h3>{g.name}</h3><p className="gift-description">{g.description}</p><dl><div><dt>추천 선물</dt><dd>{g.item}</dd></div><div><dt>위치</dt><dd>{g.address}</dd></div></dl><p className="gift-tip">💡 {g.tip}</p><div className="gift-actions"><a href={g.source} target="_blank" rel="noreferrer" aria-label={`${g.name} ${g.sourceLabel}`}>상점 정보 ↗</a><a href={map(g.name)} target="_blank" rel="noreferrer"><Icon name="pin" size={14}/> 지도에서 찾기</a></div></article>)}</div>{visibleGifts.length===0&&<div className="empty"><h3>이 분류에 저장한 선물 상점이 없어요</h3><p>상점 카드의 하트를 눌러 여행 쇼핑 목록에 담아보세요.</p></div>}<div className="gift-travel-tip"><strong>여행 선물, 이렇게 챙겨요</strong><p>어묵은 제품별 냉장·냉동 보관 안내와 이동시간을 확인하세요. 떡은 권장 섭취기한을 확인하고, 장거리 이동이라면 보냉 포장이나 택배 가능 여부를 물어보세요.</p><span>판매 품목·재고·포장 서비스는 매장별로 달라요. 상점 정보 확인일 2026.10.16</span></div></section>
+ <section className="night" id="night"><div><span className="eyebrow">ANOTHER TASTE OF BUSAN</span><h2>해가 지면, 또 다른 맛이 열려요 ☾</h2><p>반짝이는 불빛 아래 즐기는 세계의 길거리 음식.<br/>부평깡통야시장에서 부산의 밤을 맛보세요.</p><a href={map("야시장")} target="_blank" rel="noreferrer">야시장 찾아가기 <Icon name="arrow" size={17}/></a></div><div className="night-art">✦ <div>부평깡통<span>夜</span>시장<small>맛있는 밤, 행복한 부산</small></div> ✧</div></section><div className="info">◷ 가게별 영업시간과 메뉴는 달라질 수 있어요. 방문 전 지도에서 최신 정보를 확인해 주세요.</div></div></main>
+ <footer><div className="footer-top"><div className="footer-brand">깡통한입<small>부산의 골목을, 맛있게.</small></div><p>좋은 한 입이 좋은 여행이 되도록.<br/>부평깡통시장의 맛있는 발견을 함께해요.</p><a href="https://www.busanpedia.com/bupyeong-kkangtong-market/" target="_blank" rel="noreferrer">가게 정보 · 사진 출처 ↗</a></div><div className="footer-bottom"><span>© 2026 깡통한입. Made with appetite in Busan.</span><span>부산광역시 중구 부평동 · 부평깡통시장</span></div></footer>
+ {selected&&<div className="backdrop" onClick={()=>setSelected(null)}><section className="modal" role="dialog" aria-modal="true" aria-label={selected.name} onClick={e=>e.stopPropagation()}><button className="close" autoFocus onClick={()=>setSelected(null)} aria-label="닫기">✕</button><div className="modal-photo" style={{backgroundImage:`url("${selected.image}")`}}/><div className="modal-body"><span className="eyebrow">{selected.category} · 부평깡통시장</span><h2>{selected.name}</h2><p>{selected.desc}</p><div className="menu"><span>대표 메뉴</span><strong>{selected.menu}</strong></div><p className="note">방문 전 지도에서 가격, 영업시간과 정확한 위치를 확인해 주세요.{selected.id>=3&&" 사진은 메뉴 참고 이미지입니다."}</p><div className="modal-actions"><a href={map(selected.name)} target="_blank" rel="noreferrer">지도에서 위치·영업정보 보기 ↗</a><button onClick={()=>save(selected.id)}><Icon name="heart" size={17}/>{saved.includes(selected.id)?"저장됨":"저장하기"}</button></div></div></section></div>}</>;
 }
+
+
+
